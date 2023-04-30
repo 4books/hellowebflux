@@ -52,7 +52,6 @@ public class HelloRouter {
                 .body(numbers, Map.class);
     }
 
-
     private Mono<ServerResponse> handleRandomNumbers(ServerRequest req) {
         List<Integer> numbers = new ArrayList<>(45);
         for (int i = 1; i <= 45; i++) {
