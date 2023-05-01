@@ -17,4 +17,8 @@ public class MemberService {
     public Mono<Member> findById(Integer id) {
         return memberRepository.findById(id);
     }
+
+    public Mono<Member> addMember(Member member) {
+        return memberRepository.save(member);
+    }
 }

@@ -2,11 +2,14 @@ package com.fourbooks.hellowebflux.controller;
 
 import com.fourbooks.hellowebflux.domain.Member;
 import com.fourbooks.hellowebflux.service.MemberService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+
+import java.net.URI;
 
 @Controller
 public class MemberController {
@@ -27,5 +30,16 @@ public class MemberController {
 
         model.addAttribute("member", memberMono);
         return Mono.just("member");
+    }
+
+    @PostMapping("/member")
+    public Mono<Void> addMember(@RequestParam Integer id, @RequestParam String name, @RequestParam Integer age, ServerHttpResponse response) {
+        Member newMember = new Member(id, name, age);
+        return memberService.addMember(newMember)
+                .flatMap(savedMember -> {
+                    response.setStatusCode(HttpStatus.SEE_OTHER);
+                    response.getHeaders().setLocation(URI.create("/member/" + savedMember.getId()));
+                    return response.setComplete();
+                });
     }
 }
