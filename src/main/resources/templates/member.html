@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 정보</title>
+</head>
+<body>
+<h1>회원 정보</h1>
+
+<div th:if="${member != null}">
+    <p>이름: <span th:text="${member.name}"></span></p>
+    <p>나이: <span th:text="${member.age}"></span></p>
+</div>
+<div th:if="${member == null}">
+    <p>회원이 존재하지 않습니다.</p>
+</div>
+<button onclick="location.href='/'">처음으로</button>
+</body>
+</html>

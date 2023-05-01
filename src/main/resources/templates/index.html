@@ -6,10 +6,10 @@
 </head>
 <body>
 <h1>사용자 조회</h1>
-<form th:action="@{/users/{id}(id=${userId})}" th:method="get">
+<form id="userForm">
     <label for="id">ID:</label>
     <input type="text" id="id" name="id">
-    <button type="submit">전송</button>
+    <button type="button" onclick="submitForm()">전송</button>
 </form>
 <hr>
 <div>
@@ -20,5 +20,16 @@
         <button type="submit">Get Lotto</button>
     </form>
 </div>
+
+<script>
+    function submitForm() {
+        let userId = document.getElementById('id').value;
+        if (userId) {
+            location.href = `/member/${userId}`;
+        } else {
+            alert("ID를 입력해주세요.");
+        }
+    }
+</script>
 </body>
 </html>
